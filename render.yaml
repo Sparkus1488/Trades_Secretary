@@ -1,5 +1,3 @@
-# Private-beta deployment blueprint. Use a single instance with a persistent disk.
-# Runtime data is still JSON-backed in this release; this is not a multi-instance production setup.
 services:
   - type: web
     name: trades-secretary-private-beta
@@ -20,9 +18,10 @@ services:
         value: "1"
       - key: PORT
         value: "4242"
-      - key: Trades Secretary_DATA_DIR
+      - key: SITEPIX_DATA_DIR
         value: /var/data
-      - key: Trades Secretary_BETA_INVITE_CODE
+      - key: SITEPIX_BETA_INVITE_CODE
         generateValue: true
       - key: OPENAI_MODEL
         value: gpt-4.1-mini
+        

@@ -1,0 +1,15 @@
+{
+  "leads": [],
+  "estimates": [],
+  "projects": [],
+  "posts": [],
+  "settings": {
+    "businessName": "Your Construction Business",
+    "trade": "Remodeling",
+    "serviceArea": "",
+    "autonomy": "Approval required",
+    "subscription": "Pro",
+    "measureBidEnabled": false
+  },
+  "callLog": []
+}

@@ -1,0 +1,11 @@
+node_modules/
+.env
+.DS_Store
+
+# Local secrets and generated state
+.env
+
+# Runtime data may contain customer details and session metadata
+data/auth.json
+data/tenants/
+data/db.json

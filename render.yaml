@@ -1,16 +1,15 @@
+# Free sandbox deployment for testing only.
+# Filesystem is ephemeral: test accounts, records, and uploads may disappear on restart, spin-down, or redeploy.
+# Use synthetic data only. This is not a production deployment.
 services:
   - type: web
-    name: trades-secretary-private-beta
+    name: trades-secretary-sandbox
     runtime: docker
-    plan: starter
+    plan: free
     dockerfilePath: ./Dockerfile
     dockerContext: .
     healthCheckPath: /api/health
     autoDeploy: false
-    disk:
-      name: trades-secretary-data
-      mountPath: /var/data
-      sizeGB: 1
     envVars:
       - key: NODE_ENV
         value: production
@@ -19,9 +18,8 @@ services:
       - key: PORT
         value: "4242"
       - key: SITEPIX_DATA_DIR
-        value: /var/data
+        value: /app/data
       - key: SITEPIX_BETA_INVITE_CODE
         generateValue: true
       - key: OPENAI_MODEL
         value: gpt-4.1-mini
-        

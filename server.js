@@ -154,7 +154,7 @@ const server = http.createServer(async (req, res) => {
   securityHeaders(res);
   const url = new URL(req.url, `http://${req.headers.host || "localhost"}`);
   try {
-    if (req.method === "GET" && url.pathname === "/api/health") return json(res, 200, { ok: true, service: "sitepix-ai", version: "0.4.1" });
+    if (req.method === "GET" && url.pathname === "/api/health") return json(res, 200, { ok: true, service: "trades-secretary", version: "0.4.2" });
     if (req.method === "GET" && url.pathname === "/api/config/public") return json(res, 200, { betaInviteRequired: Boolean(process.env.SITEPIX_BETA_INVITE_CODE) });
     if (req.method === "POST" && ["/api/auth/register", "/api/auth/login"].includes(url.pathname)) {
       const ip = String(process.env.TRUST_PROXY === "1" && req.headers["x-forwarded-for"] ? req.headers["x-forwarded-for"] : req.socket.remoteAddress || "unknown").split(",")[0].trim();
@@ -609,4 +609,4 @@ const server = http.createServer(async (req, res) => {
     });
   } catch (e) { json(res, 400, { error: process.env.NODE_ENV === "production" ? "Request could not be processed." : (e.message || "Request failed.") }); }
 });
-server.listen(PORT, () => console.log(`SITEPIX AI MVP running at http://localhost:${PORT}`));
+server.listen(PORT, () => console.log(`Trades Secretary running at http://localhost:${PORT}`));

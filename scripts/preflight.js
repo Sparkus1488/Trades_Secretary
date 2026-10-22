@@ -17,8 +17,10 @@ try {
 }
 if (process.env.NODE_ENV === 'production') {
   if (!process.env.SITEPIX_BETA_INVITE_CODE) failures.push('SITEPIX_BETA_INVITE_CODE must be set in production.');
-  if (!process.env.SITEPIX_BASE_URL || !/^https:\/\//i.test(process.env.SITEPIX_BASE_URL)) failures.push('SITEPIX_BASE_URL must be the deployed HTTPS base URL.');
-  if (process.env.SITEPIX_DATA_DIR && !path.isAbsolute(process.env.SITEPIX_DATA_DIR)) warnings.push('Use an absolute persistent-disk path for SITEPIX_DATA_DIR in deployment.');
+  const baseUrl = process.env.SITEPIX_BASE_URL || process.env.RENDER_EXTERNAL_URL || '';
+  if (!/^https:\/\//i.test(baseUrl)) failures.push('SITEPIX_BASE_URL or Render RENDER_EXTERNAL_URL must be set to the deployed HTTPS base URL.');
+  if (process.env.SITEPIX_DATA_DIR && !path.isAbsolute(process.env.SITEPIX_DATA_DIR)) warnings.push('Use an absolute path for SITEPIX_DATA_DIR in deployment.');
+  if (process.env.SITEPIX_DATA_DIR === '/app/data') warnings.push('Sandbox data directory is ephemeral; test accounts, records, and uploads may be lost after spin-down, restart, or redeploy.');
 } else {
   warnings.push('Non-production mode: invite-only registration is active only when SITEPIX_BETA_INVITE_CODE is configured.');
 }
@@ -27,8 +29,8 @@ if (!process.env.STRIPE_SECRET_KEY) warnings.push('Stripe is not configured; sub
 if (!process.env.TWILIO_AUTH_TOKEN) warnings.push('Twilio is not configured; real phone workflows are unavailable.');
 if (!process.env.GOOGLE_MAPS_API_KEY) warnings.push('Routing API is not configured; travel calculations require contractor-entered distance/time.');
 if (!process.env.DATABASE_URL) warnings.push('No PostgreSQL runtime adapter is implemented in this release; runtime data remains JSON-backed.');
-if (!process.env.S3_BUCKET) warnings.push('Private cloud object storage is not configured; media remains on the app data disk.');
+if (!process.env.S3_BUCKET) warnings.push('Private cloud object storage is not configured; media remains on the app data filesystem.');
 for (const warning of warnings) console.log(`WARN  ${warning}`);
 for (const failure of failures) console.error(`FAIL  ${failure}`);
 if (failures.length) process.exit(1);
-console.log(`PASS  SITEPIX AI preflight passed for ${process.env.NODE_ENV || 'development'} mode.`);
+console.log(`PASS  Trades Secretary preflight passed for ${process.env.NODE_ENV || 'development'} mode.`);

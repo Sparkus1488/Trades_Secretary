@@ -1,3 +1,5 @@
+# Private-beta deployment blueprint. Use a single instance with a persistent disk.
+# Runtime data is JSON-backed in this release; this is not a multi-instance production setup.
 services:
   - type: web
     name: trades-secretary-private-beta
@@ -24,4 +26,3 @@ services:
         generateValue: true
       - key: OPENAI_MODEL
         value: gpt-4.1-mini
-        

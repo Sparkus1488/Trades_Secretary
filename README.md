@@ -18,8 +18,8 @@ Trades Secretary is a single-instance pilot for contractor productivity workflow
 - Run `npm run preflight` to check configuration.
 - Run `docker compose up --build` to run with Docker Compose.
 
-## Render private beta
-The included `render.yaml` describes a single-instance Docker deployment with a persistent disk. Configure secrets in Render's environment settings; never commit provider credentials. Production startup requires `SITEPIX_BETA_INVITE_CODE`.
+## Free Render sandbox
+The included `render.yaml` configures a free, single-instance Docker sandbox with automatic deployment disabled. It does not attach a persistent disk. Render's free filesystem is ephemeral, so test accounts, saved records, and uploaded media can be lost when the service spins down, restarts, or redeploys. Use synthetic test data only; do not use real customer information. The service may take about a minute to wake after inactivity. Production startup requires `SITEPIX_BETA_INVITE_CODE`, which the blueprint generates.
 
 Read `docs/INTEGRATIONS.md`, `docs/PRIVATE_BETA_SETUP.md`, and `docs/LAUNCH_CHECKLIST.md` before using integrations or deploying. Live provider calls are not validated by the automated tests, and deployment has not yet been performed.
 

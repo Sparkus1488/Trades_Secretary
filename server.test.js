@@ -30,7 +30,7 @@ async function uploadPng(cookie) {
   return fetch(`${base}/api/media/upload`, { method: "POST", headers: { "content-type": `multipart/form-data; boundary=${boundary}`, "content-length": String(body.length), cookie }, body });
 }
 
-test("SITEPIX AI authentication, tenant isolation, and core API tests", async t => {
+test("Trades Secretary authentication, tenant isolation, and core API tests", async t => {
   child = spawn(process.execPath, ["server.js"], { cwd: __dirname, env: { ...process.env, NODE_ENV: "test", PORT: String(port), SITEPIX_DATA_DIR: dataDir, SITEPIX_BETA_INVITE_CODE: "beta-test-invite-2026", STRIPE_WEBHOOK_SECRET: "whsec_test_sitepix", TWILIO_AUTH_TOKEN: "twilio_test_token", TWILIO_INCOMING_WEBHOOK_URL: "https://sitepix.example/api/telephony/incoming", TWILIO_VOICE_TURN_WEBHOOK_URL: "https://sitepix.example/api/telephony/voice-turn", TWILIO_RECORDING_CALLBACK_URL: "https://sitepix.example/api/telephony/recording-complete" }, stdio: "ignore" });
   t.after(() => { if (child && !child.killed) child.kill("SIGTERM"); fs.rmSync(dataDir, { recursive: true, force: true }); });
   await waitForServer();
@@ -41,7 +41,7 @@ test("SITEPIX AI authentication, tenant isolation, and core API tests", async t 
     assert.equal(r.headers.get("x-content-type-options"), "nosniff"); assert.equal(r.headers.get("cache-control"), "no-store");
   });
   await t.test("health and public config expose only safe launch status", async () => {
-    const r = await fetch(`${base}/api/health`); assert.equal(r.status, 200); assert.equal((await r.json()).version, "0.4.1");
+    const r = await fetch(`${base}/api/health`); assert.equal(r.status, 200); assert.equal((await r.json()).version, "0.4.2");
     const config = await fetch(`${base}/api/config/public`); assert.deepEqual(await config.json(), { betaInviteRequired: true });
   });
   await t.test("workspace APIs require a session", async () => {
